@@ -24,7 +24,7 @@ All contributions should adhere to the following branch naming format
 
 `{story type prefix}-{2-3 word summary}`
 
-#### Story type prefixes are one of the following;
+#### Story type prefixes are one of the following
 
 * ft == feature
 
