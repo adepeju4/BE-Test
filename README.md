@@ -28,3 +28,6 @@ All contributions should adhere to the following branch naming format
 ## Note
 
 Always ensure to pull upstream changes into your local repo and ensure there are no merge conflicts before pushing.
+
+
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/1733718ff1b549939ba5b67d2f535c00)](https://www.codacy.com/gh/Denniman/group-four-BE/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Denniman/group-four-BE&amp;utm_campaign=Badge_Grade)
