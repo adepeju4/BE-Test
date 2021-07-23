@@ -40,21 +40,21 @@ const AuthController = {
                 return res.status(400).json({message: 'User already exist. Please login'})
             }
 
-            const salt = bcrypt.genSaltSync(10)
+            const salt = bcrypt.genSaltSync(10);
             const hash = bcrypt.hashSync(password, salt)
 
 
-            if(hash) {
+            if (hash) {
                 const newUser = new User({ firstName, lastName, email, password: hash})
                 const savedUser = await newUser.save()
      
-                if(savedUser) {
+                if (savedUser) {
                     jwt.sign(
-                        {id: savedUser._id},
-                        process.env.SECRET,
+                    {id: savedUser._id},
+                    process.env.SECRET,
                         {expiresIn: 3600},
                         (err, token) => {
-                            if(err) {
+                            if (err) {
                                 throw err
                             }
      
@@ -62,7 +62,7 @@ const AuthController = {
                                 { 
                                      status: 'success',
                                      data: {
-                                         token: "Bearer " + token,
+                                         token: `Bearer ${token}`,
                                          id: savedUser._id,
                                          name: savedUser.name,
                                          email: savedUser.email,
