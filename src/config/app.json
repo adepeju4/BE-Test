@@ -1,0 +1,15 @@
+{
+    "mongoddb": {
+        "db": "foodine",
+        "host": "127.0.0.1",
+        "username": "",
+        "password": "",
+        "port":"27017",
+        "collections": {
+            "user": "foodine-user",
+            "cart": "foodine-cart",
+            "products": "foodine-products"
+    
+        }
+    }
+}
