@@ -3,36 +3,34 @@ import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
 import {User} from '../models/UserModel.js'
 import { Subscribe } from '../models/SubscribeModel.js'
+import validatePassword from '../utils/validatePassword.js'
+import emailValidation from '../utils/validateEmail.js'
 
 
 dotenv.config()
 
 const AuthController = {
     signup: async (req, res) => {
-        const {firstName, lastName, email, password, confirmPassword} = req.body 
+        const {name, email, password} = req.body 
 
         try {
-            if(!firstName || !lastName || !email || !password || !confirmPassword) {
+            if(!name || !email || !password) {
                 return res
                 .status(400)
                 .json({message: 'All fields must be provided'})
             }
 
-            if(password !== confirmPassword) {
-                return res.status(400).json({message: 'Password does not match'})
-            }
-
-            const emailValidation = (email) => {
-                const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-                return isValid
-            }
 
             if(!emailValidation(email)) {
                 return res.status(400).json({message: 'Enter a valid email address'})
             }
 
-            if(password.length < 8) {
-                return res.status(400).json({message: 'Password should not be less than 8 characters long'})
+            if(password.length < 7) {
+                return res.status(400).json({message: 'Password should not be less than 7 characters'})
+            }
+
+            if(!validatePassword(password)) {
+                return res.status(400).json({message: 'Password must be alphanumeric characters'})
             }
 
             const findUser = await User.findOne({email})
@@ -46,7 +44,7 @@ const AuthController = {
 
 
             if (hash) {
-                const newUser = new User({ firstName, lastName, email, password: hash})
+                const newUser = new User({ name, email, password: hash})
                 const savedUser = await newUser.save()
      
                 if (savedUser) {
