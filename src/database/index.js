@@ -9,7 +9,7 @@ const db = `mongodb+srv://${process.env.DATABASE_USER}:${process.env.DATABASE_PA
 const databaseConnection = {
     getConnect: () => {
         mongoose
-        .connect(process.env.DBURL || db, { useNewUrlParser: true, useUnifiedTopology: true})
+        .connect(db, { useNewUrlParser: true, useUnifiedTopology: true})
         .then(() => console.log('connected successfully'))
         .catch((err) => console.log(err.message))
     }

@@ -1,10 +1,10 @@
-import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
-import dotenv from 'dotenv'
-import {User} from '../models/UserModel.js'
-import { Subscribe } from '../models/SubscribeModel.js'
-import validatePassword from '../utils/validatePassword.js'
-import emailValidation from '../utils/validateEmail.js'
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+import {User} from '../models/UserModel.js';
+import validatePassword from '../utils/validatePassword.js';
+import emailValidation from '../utils/validateEmail.js';
+import {generateToken} from '../utils/generateToken.js';
 
 
 dotenv.config()
@@ -81,7 +81,6 @@ const AuthController = {
         }
     },
 
-    //sign in goes here
     login: async (req, res) => {
         const {email, password} = req.body
 
@@ -112,26 +111,7 @@ const AuthController = {
         }  
     },
 
-    subscribe: async (req, res) => {
-        const {email} = req.body;
-        try{
-            const newUser = new Subscribe({email});
     
-            const response = await newSubscribe.save()
-            if(response){
-                return res.status(200).json({
-                    status: 'Successful',
-                    message: 'Thank you for subscribing',
-                });
-            }
-            res.status(500).json({
-                status: 'Failed',
-                message: 'Please try again',
-            });
-        }catch(err){
-            console.log(err);
-        }
-    }
    
 }
 
