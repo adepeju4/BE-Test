@@ -1,9 +1,10 @@
-import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
-import dotenv from 'dotenv'
-import {User} from '../models/UserModel.js'
-import validatePassword from '../utils/validatePassword.js'
-import emailValidation from '../utils/validateEmail.js'
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+import {User} from '../models/UserModel.js';
+import validatePassword from '../utils/validatePassword.js';
+import emailValidation from '../utils/validateEmail.js';
+import {generateToken} from '../utils/generateToken.js';
 
 
 dotenv.config()
@@ -80,7 +81,6 @@ const AuthController = {
         }
     },
 
-    //sign in goes here
    
 }
 
