@@ -81,6 +81,37 @@ const AuthController = {
         }
     },
 
+    login: async (req, res) => {
+        const {email, password} = req.body
+
+        try {
+
+            if(!email || !password) {
+                return res
+                .status(400)
+                .json({message: 'All fields must be provided'})
+            }
+    
+            const user = await User.findOne({ email })
+            if(user) {
+                if(bcrypt.compareSync(password, user.password)) {
+                    return res.status(200).json({
+                        _id: user._id,
+                        name: user.name,
+                        email: user.email,
+                        token: 'Bearer ' + generateToken(user)
+                    })
+                }
+            }
+    
+            return res.status(401).json({message: 'Incorrect email or password'})
+            
+        } catch (err) {
+            return res.status(500).json({message: 'server error'})
+        }  
+    },
+
+    
    
 }
 
