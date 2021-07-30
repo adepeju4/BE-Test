@@ -1,9 +1,9 @@
 import express from 'express';
 import cors from 'cors';
 
-import userRoute from './routes/userRoute.js'
+import userRoute from './routes/userRoute.js';
 
-const app = express()
+const app = express();
 
 
 app.use(cors());
@@ -17,7 +17,7 @@ app.get('/', (req, res) => {
 
 
 // routes 
-app.use('/api', userRoute)
+app.use('/api', userRoute);
 
 
 export default app;
