@@ -15,5 +15,9 @@ jobs:
         run: |
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
+      -name: npm install and test
+        run: |
+        npm install
+        npm test 
       - name: Run Jest
         uses: stefanoeb/jest-action@1.0.3

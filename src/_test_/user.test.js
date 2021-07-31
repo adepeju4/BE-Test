@@ -20,7 +20,7 @@ describe('POST /api', () => {
         .send({email: 'stella@gmail.com', password: ''})
         .set('Accept', 'application/json')
         expect(response.status).toBe(400)
-        expect(response.body.message).toBe('All fields must be provided')
+        expect(response.body.message).toBe('All fields must not be provided')
     })
     
     it('should specify json in the content type header', async () => {
