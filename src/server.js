@@ -14,10 +14,6 @@ app.use(express.json());
 app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: true}));
 
-let corsOptions = {
-  origin: 'http://localhost:3000/',
-  optionsSuccessStatus: 200, 
-};
 
 
 app.get('/', (req, res) => {
@@ -27,7 +23,7 @@ app.get('/', (req, res) => {
 
 // routes 
 app.use('/api', userRoute);
-app.use('/', productRoutes, cors(corsOptions));
+app.use('/', productRoutes);
 
 
 export default app;
