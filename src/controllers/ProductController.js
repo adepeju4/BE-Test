@@ -11,12 +11,12 @@ export const getDishes = async (req, res) => {
 
     let { featured } = req.query;
 
-    console.log(featured, "hmm is it trueee?");
+   
 
     if (featured) {
-      console.log("featured dey here")
+      
     } else if (!featured) {
-      console.log("imposteeeerrrrrrrr!!!!!")
+     
     }
    
     res.statusCode = 200;
