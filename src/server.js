@@ -14,6 +14,10 @@ app.use(express.json());
 app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: true}));
 
+let corsOptions = {
+  origin: 'http://localhost:3000/',
+  optionsSuccessStatus: 200, 
+};
 
 
 app.get('/', (req, res) => {
