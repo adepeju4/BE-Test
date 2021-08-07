@@ -10,16 +10,11 @@
     "dev": "nodemon src/index.js"
   },
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Denniman/group-four-BE.git"
+    "type": "git"
   },
   "author": "",
   "license": "ISC",
   "type": "module",
-  "bugs": {
-    "url": "https://github.com/Denniman/group-four-BE/issues"
-  },
-  "homepage": "https://github.com/Denniman/group-four-BE#readme",
   "jest": {
     "testEnvironment": "node"
   },
