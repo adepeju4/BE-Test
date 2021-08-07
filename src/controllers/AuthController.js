@@ -47,9 +47,11 @@ const AuthController = {
                 const newUser = new User({ name, email, password: hash})
                 const savedUser = await newUser.save()
      
+                console.log(newUser)
                 if (savedUser) {
+                    
                     jwt.sign(
-                    {id: savedUser._id},
+                        { id: savedUser._id },
                     process.env.SECRET,
                         {expiresIn: 3600},
                         (err, token) => {
@@ -70,6 +72,7 @@ const AuthController = {
                                  })
                         }
                     )
+                    console.log(savedUser, "errrrm");
                 }
             }
 
@@ -82,7 +85,9 @@ const AuthController = {
     },
 
     login: async (req, res) => {
-        const {email, password} = req.body
+        const { email, password } = req.body
+        
+         console.log(req.body, "step one")
 
         try {
 
@@ -91,8 +96,9 @@ const AuthController = {
                 .status(400)
                 .json({message: 'All fields must be provided'})
             }
-    
+            console.log("step two")
             const user = await User.findOne({ email })
+            console.log("step three")
             if(user) {
                 if(bcrypt.compareSync(password, user.password)) {
                     return res.status(200).json({
@@ -103,7 +109,7 @@ const AuthController = {
                     })
                 }
             }
-    
+           console.log(user, "step four")
             return res.status(401).json({message: 'Incorrect email or password'})
             
         } catch (err) {
