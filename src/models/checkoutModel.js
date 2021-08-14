@@ -9,10 +9,13 @@ const cartSchema = new Schema({
         type: Schema.Types.ObjectId,
       ref: 'user'
   },
-  cart: {
-    type: [Schema.Types.ObjectId],
-    ref: "Dish"
-  }
+  cart: [{
+    dish: {
+       type: Schema.Types.ObjectId,
+       ref: 'Dish'
+      }
+   
+  }]
   
 });
 

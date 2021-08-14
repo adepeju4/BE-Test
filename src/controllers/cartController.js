@@ -19,31 +19,21 @@ export const postCartItem = async (req, res) => {
     const { user } = req;
     
     let findCart = await Checkout.findOne({ user: user._id });
-  
-    const isAdded = findCart.cart.find((dish) => {
-   
-      return dish == dishId;
-    });
-    
 
+    console.log(findCart, "the cart with the user id")
+
+    const isAdded = findCart.cart.filter(dish => dish._id.toString() === dishId)
+      .length > 0;
+    
+console.log(isAdded, "the item that exists") 
     if (isAdded) {
       return res.status(401).send("Dish already exists in cart");
     }
-    else {
-    
-        
-     const addedItem = await Checkout.findOneAndUpdate({ user: user._id },
-        {
-          $push: {
-            
-            cart: dishId
-          }
-        }, {new: true});
-      
-     
-      res.status(200).send({ message: "success", data: addedItem}).end();
+      const addedItem = await findCart.cart.unshift(dishId);
+      await findCart.save();
+      res.status(200).send({ message: "success", data: findCart}).end();
    
-    }
+    
   } catch (err) {
     console.log(err);
     res.status(400).send({ message: `Invalid request` }).end();
@@ -70,27 +60,20 @@ export const deleteCartItem = async (req, res) => {
 
       let findCart = await Checkout.findOne({ user: user._id });
 
-      const itExists = findCart.cart.find((dish) => {
-        return dish == dishId;
-      });
+      const notExistent =
+        findCart.cart.filter((dish) => dish._id.toString() === dishId).length === 0;
 
-      if (itExists) {
-       
-      
-        const removeItem = await Checkout.findOneAndUpdate(
-          { user: user._id },
-          {
-            $pull: {
-              cart: dishId,
-            },
-          },
-          { new: true }
-        );
-
-        res.status(200).send({ message: 'success', data: removeItem }).end();
-      } else {
-         return res.status(401).send('Dish does not exist in cart');
-      }
+      if (notExistent) {
+        return res.status(401).send('Dish does not exist in cart');
+    }
+    const indexOfDishToDelete = await findCart.cart
+      .map((dish) => {
+        return dish._id.toString();
+      })
+      .indexOf(dishId);
+    await findCart.cart.splice(indexOfDishToDelete, 1);
+    await findCart.save();
+    res.status(200).send({ data: findCart, message: "Successfully deleted cart item" });
   } catch (err) {
     res.status(400).send({ message: 'inavlid request' });
   }
