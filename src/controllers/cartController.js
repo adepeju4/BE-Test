@@ -29,23 +29,24 @@ console.log(isAdded, "the item that exists")
     if (isAdded) {
       return res.status(401).send("Dish already exists in cart");
     }
-      const addedItem = await findCart.cart.unshift(dishId);
+    const addedItem = await findCart.cart.unshift({ dish: dishId });
       await findCart.save();
       res.status(200).send({ message: "success", data: findCart}).end();
    
     
   } catch (err) {
     console.log(err);
-    res.status(400).send({ message: `Invalid request` }).end();
+    res.status(400).send({ message: `Invalid request hmm` }).end();
   }
 
 }
 export const getCartItem = async (req, res) => {
   try {
     const { userId } = req.params;
-    const findCartItems = await Checkout.find({ user: userId });
+    const findCartItems = await Checkout.findOne({ user: userId }).populate("cart.dish");
     
-      res.status(200).send({ message: 'success', data: findCartItems }).end();
+    
+    res.status(200).json(findCartItems.cart);
     
   } catch (err) {
     console.log(err);
