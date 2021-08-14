@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import {User} from '../models/UserModel.js';
 import validatePassword from '../utils/validatePassword.js';
 import emailValidation from '../utils/validateEmail.js';
+import Checkout from "../models/checkoutModel.js"
 import {generateToken} from '../utils/generateToken.js';
 
 
@@ -45,7 +46,8 @@ const AuthController = {
 
             if (hash) {
                 const newUser = new User({ name, email, password: hash})
-                const savedUser = await newUser.save()
+                const savedUser = await newUser.save();
+                await Checkout.create({user: savedUser._id, cart: []});
      
                 
                 if (savedUser) {
@@ -113,7 +115,8 @@ const AuthController = {
             return res.status(401).json({message: 'Incorrect email or password'})
             
         } catch (err) {
-            return res.status(500).json({message: 'server error'})
+            console.log(err.message)
+            // return res.status(500).json({message: 'server error'})
         }  
     },
 
