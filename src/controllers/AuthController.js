@@ -30,10 +30,6 @@ const AuthController = {
                 return res.status(400).json({message: 'Password should not be less than 7 characters'})
             }
 
-            if(!validatePassword(password)) {
-                return res.status(400).json({message: 'Password must be alphanumeric characters'})
-            }
-
             const findUser = await User.findOne({email})
 
             if(findUser) {
