@@ -6,16 +6,18 @@ const Schema = mongoose.Schema;
 
 const cartSchema = new Schema({
   user: {
-        type: Schema.Types.ObjectId,
-      ref: 'user'
+    type: Schema.Types.ObjectId,
+    ref: 'user',
   },
-  cart: [{
-    dish: {
-       type: Schema.Types.ObjectId,
-       ref: 'Dish'
-      }
-  }]
-  
+  cart: [
+    {
+      dish: {
+        type: Schema.Types.ObjectId,
+        ref: 'Dish',
+       
+      },
+    },
+  ],
 });
 
 let Checkout = mongoose.model('Checkout', cartSchema);

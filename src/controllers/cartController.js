@@ -3,7 +3,7 @@ import Checkout from '../models/checkoutModel.js';
 export const getCartItems = async (req, res) => {
   try {
     
-    const findCartItems = await Checkout.find();
+    const findCartItems = await Checkout.find().populate('cart.dish');
     console.log(findCartItems)
     res.status(200).send({ message: 'success', data: findCartItems }).end();
   } catch (err) {
@@ -22,13 +22,14 @@ export const postCartItem = async (req, res) => {
 
     console.log(findCart, "the cart with the user id")
 
-    const isAdded = findCart.cart.filter(dish => dish._id.toString() === dishId)
+    const isAdded = findCart.cart.filter(dish => dish.dish.toString() === dishId)
       .length > 0;
     
 console.log(isAdded, "the item that exists") 
     if (isAdded) {
       return res.status(401).send("Dish already exists in cart");
     }
+    console.log(isAdded)
     const addedItem = await findCart.cart.unshift({ dish: dishId });
       await findCart.save();
       res.status(200).send({ message: "success", data: findCart}).end();
@@ -62,7 +63,7 @@ export const deleteCartItem = async (req, res) => {
       let findCart = await Checkout.findOne({ user: user._id });
 
       const notExistent =
-        findCart.cart.filter((dish) => dish._id.toString() === dishId).length === 0;
+        findCart.cart.filter((dish) => dish.dish.toString() === dishId).length === 0;
 
       if (notExistent) {
         return res.status(401).send('Dish does not exist in cart');

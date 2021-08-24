@@ -18,9 +18,9 @@ const dishSchema = new Schema(
     category: {
       type: String,
     },
-    label: {
+    size: {
       type: String,
-      default: '',
+      default: 'Small',
     },
     price: {
       type: Number,
@@ -40,6 +40,10 @@ const dishSchema = new Schema(
     description: {
       type: String,
       required: true,
+    },
+    likes: {
+      type: Number,
+      default: 0
     }
    
   },

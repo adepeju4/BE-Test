@@ -5,6 +5,7 @@ import {User} from '../models/UserModel.js';
 import validatePassword from '../utils/validatePassword.js';
 import emailValidation from '../utils/validateEmail.js';
 import Checkout from "../models/checkoutModel.js"
+import Favorite from '../models/favoriteModel.js';
 import {generateToken} from '../utils/generateToken.js';
 
 
@@ -48,14 +49,14 @@ const AuthController = {
                 const newUser = new User({ name, email, password: hash})
                 const savedUser = await newUser.save();
                 await Checkout.create({user: savedUser._id, cart: []});
-     
+                await Favorite.create({ user: savedUser._id, dishes: [] });
                 
                 if (savedUser) {
                     
                     jwt.sign(
                         { id: savedUser._id },
                     process.env.SECRET,
-                        {expiresIn: 3600},
+                        {expiresIn: 86000},
                         (err, token) => {
                             if (err) {
                                 throw err

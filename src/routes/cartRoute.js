@@ -12,12 +12,12 @@ import auth from '../middlewares/auth.js';
 
 let router = Router();
 
-router.get("/list", getCartItems)
-router.get("/:userId", getCartItem)
-router.post("/:dishId", auth, postCartItem)
+router.get("/list", getCartItems);
+router.get("/:userId", getCartItem);
+router.post("/:dishId", auth, postCartItem);
 
 
 //Cart IDs
-router.delete("/:dishId", auth, deleteCartItem)
+router.delete("/:dishId", auth, deleteCartItem);
 
 export default router;
