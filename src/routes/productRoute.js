@@ -10,6 +10,9 @@ import {
 
 } from '../controllers/ProductController.js';
 
+import auth from "../middlewares/auth.js"
+
+
 let router = Router();
 
 
@@ -19,8 +22,8 @@ router.post('/list', postDish);
 
 //for the ids
 router.get('/:dishId', getDish)
-router.patch('/:dishId', updateDish);
-router.delete('/:dishId', deleteDish);
+router.patch('/:dishId', auth, updateDish);
+router.delete('/:dishId', auth, deleteDish);
 
 
 

@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import {User} from '../models/UserModel.js';
 import validatePassword from '../utils/validatePassword.js';
 import emailValidation from '../utils/validateEmail.js';
+import Checkout from "../models/checkoutModel.js"
 import {generateToken} from '../utils/generateToken.js';
 
 
@@ -29,10 +30,6 @@ const AuthController = {
                 return res.status(400).json({message: 'Password should not be less than 7 characters'})
             }
 
-            if(!validatePassword(password)) {
-                return res.status(400).json({message: 'Password must be alphanumeric characters'})
-            }
-
             const findUser = await User.findOne({email})
 
             if(findUser) {
@@ -45,9 +42,10 @@ const AuthController = {
 
             if (hash) {
                 const newUser = new User({ name, email, password: hash})
-                const savedUser = await newUser.save()
+                const savedUser = await newUser.save();
+                await Checkout.create({user: savedUser._id, cart: []});
      
-                console.log(newUser)
+                
                 if (savedUser) {
                     
                     jwt.sign(
@@ -72,7 +70,7 @@ const AuthController = {
                                  })
                         }
                     )
-                    console.log(savedUser, "errrrm");
+                 
                 }
             }
 
@@ -87,7 +85,7 @@ const AuthController = {
     login: async (req, res) => {
         const { email, password } = req.body
         
-         console.log(req.body, "step one")
+        
 
         try {
 
@@ -96,9 +94,9 @@ const AuthController = {
                 .status(400)
                 .json({message: 'All fields must be provided'})
             }
-            console.log("step two")
+           
             const user = await User.findOne({ email })
-            console.log("step three")
+          
             if(user) {
                 if(bcrypt.compareSync(password, user.password)) {
                     return res.status(200).json({
@@ -109,11 +107,12 @@ const AuthController = {
                     })
                 }
             }
-           console.log(user, "step four")
+           
             return res.status(401).json({message: 'Incorrect email or password'})
             
         } catch (err) {
-            return res.status(500).json({message: 'server error'})
+            console.log(err.message)
+            // return res.status(500).json({message: 'server error'})
         }  
     },
 

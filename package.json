@@ -4,22 +4,17 @@
   "description": "meal ordering app",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --runInBand",
     "test:watch": "jest --watch",
     "start": "node src/index.js",
     "dev": "nodemon src/index.js"
   },
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Denniman/group-four-BE.git"
+    "type": "git"
   },
   "author": "",
   "license": "ISC",
   "type": "module",
-  "bugs": {
-    "url": "https://github.com/Denniman/group-four-BE/issues"
-  },
-  "homepage": "https://github.com/Denniman/group-four-BE#readme",
   "jest": {
     "testEnvironment": "node"
   },
@@ -31,6 +26,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongodb-memory-server-core": "^7.3.1",
     "mongoose": "^5.13.3",
+    "morgan": "^1.10.0",
     "validator": "^13.6.0"
   },
   "devDependencies": {
